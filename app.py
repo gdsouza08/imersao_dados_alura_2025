@@ -5,7 +5,7 @@ import plotly.express as px
 # --- Configuração da Página ---
 # Define o título da página, o ícone e o layout para ocupar a largura inteira.
 st.set_page_config(
-    page_title="Dashboard de Salários na Área de Dados",
+    page_title="Salários na Área de Dados",
     page_icon="📊",
     layout="wide",
 )
@@ -42,11 +42,11 @@ df_filtrado = df[
 ]
 
 # --- Conteúdo Principal ---
-st.title("🎲 Dashboard de Análise de Salários na Área de Dados")
+st.title("🤑 Salários na Área de Dados 💵")
 st.markdown("Explore os dados salariais na área de dados nos últimos anos. Utilize os filtros à esquerda para refinar sua análise.")
 
 # --- Métricas Principais (KPIs) ---
-st.subheader("Métricas gerais (Salário anual em USD)")
+st.subheader("Salário anual em USD")
 
 if not df_filtrado.empty:
     salario_medio = df_filtrado['usd'].mean()
@@ -78,7 +78,9 @@ with col_graf1:
             y='cargo',
             orientation='h',
             title="Top 10 cargos por salário médio",
-            labels={'usd': 'Média salarial anual (USD)', 'cargo': ''}
+            labels={'usd': 'Média salarial anual (USD)', 'cargo': ''},
+            color='usd',  
+            color_continuous_scale='Reds'
         )
         grafico_cargos.update_layout(title_x=0.1, yaxis={'categoryorder':'total ascending'})
         st.plotly_chart(grafico_cargos, use_container_width=True)
@@ -90,7 +92,7 @@ with col_graf2:
         grafico_hist = px.histogram(
             df_filtrado,
             x='usd',
-            nbins=30,
+            nbins=50,
             title="Distribuição de salários anuais",
             labels={'usd': 'Faixa salarial (USD)', 'count': ''}
         )
